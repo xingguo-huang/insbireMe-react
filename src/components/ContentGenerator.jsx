@@ -1,5 +1,6 @@
 // src/components/ContentGenerator.jsx
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import './ContentGenerator.css';
 import { generateContent } from '../services/api';
 
 export default function ContentGenerator() {
@@ -7,6 +8,10 @@ export default function ContentGenerator() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
+  const [showQuiz, setShowQuiz] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const [score, setScore] = useState(null);
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,17 +21,56 @@ export default function ContentGenerator() {
     try {
       const data = await generateContent(topic);
       setResult(data);
+      setShowQuiz(false);
+      setScore(null);
     } catch (err) {
       setError('Failed to generate content. Please try again.');
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    let interval;
+    if (result && !showQuiz) {
+      setTimeLeft(120);
+      interval = setInterval(() => {
+        setTimeLeft((t) => {
+          if (t <= 1) {
+            clearInterval(interval);
+            return 0;
+          }
+          return t - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [result, showQuiz]);
+
+  const handleStartQuiz = () => {
+    setShowQuiz(true);
+  };
+
+  const handleOptionChange = (qIndex, optIndex) => {
+    setAnswers((prev) => ({ ...prev, [qIndex]: optIndex }));
+  };
+
+  const handleQuizSubmit = () => {
+    const total = result.questions.length;
+    let correct = 0;
+    result.questions.forEach((q, idx) => {
+      const selected = answers[idx];
+      if (selected !== undefined && q.options[selected].is_correct) {
+        correct += 1;
+      }
+    });
+    setScore(`${correct} / ${total}`);
+  };
   
   return (
     <div className="content-generator">
       <h2>Generate Educational Content</h2>
-      
+
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="topic">Topic:</label>
@@ -39,35 +83,53 @@ export default function ContentGenerator() {
             required
           />
         </div>
-        
+
         <button type="submit" disabled={loading}>
           {loading ? 'Generating...' : 'Generate Content'}
         </button>
       </form>
-      
+
       {error && <div className="error">{error}</div>}
-      
-      {result && (
+
+      {result && !showQuiz && (
         <div className="result">
           <h3>Generated Content:</h3>
           <div className="content">{result.content}</div>
-          
-          <h3>Quiz Questions:</h3>
-          <div className="questions">
-            {result.questions.map((question, index) => (
-              <div key={index} className="question">
-                <p>{question.question_text}</p>
-                <ul>
-                  {question.options.map((option, optIndex) => (
-                    <li key={optIndex} className={option.is_correct ? 'correct' : ''}>
-                      {option.text}
-                      {option.is_correct && ' ✓'}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          <div className="timer">
+            {timeLeft > 0
+              ? `Time remaining: ${Math.floor(timeLeft / 60)}:${String(timeLeft % 60).padStart(2, '0')}`
+              : 'You can start the quiz.'}
           </div>
+          <button onClick={handleStartQuiz} disabled={timeLeft > 0}>
+            Start Quiz
+          </button>
+        </div>
+      )}
+
+      {result && showQuiz && (
+        <div className="questions">
+          {result.questions.map((question, index) => (
+            <div key={index} className="question">
+              <p>{question.question_text}</p>
+              {question.options.map((option, optIndex) => (
+                <label key={optIndex} className="option">
+                  <input
+                    type="radio"
+                    name={`q-${index}`}
+                    value={optIndex}
+                    onChange={() => handleOptionChange(index, optIndex)}
+                    checked={answers[index] === optIndex}
+                  />
+                  {option.text}
+                </label>
+              ))}
+            </div>
+          ))}
+          {score === null ? (
+            <button onClick={handleQuizSubmit}>Submit Quiz</button>
+          ) : (
+            <div className="summary">Your score: {score}</div>
+          )}
         </div>
       )}
     </div>
