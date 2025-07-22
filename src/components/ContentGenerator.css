@@ -1,0 +1,42 @@
+.content-generator {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+  padding: 1rem;
+}
+
+.result {
+  margin-top: 1.5rem;
+}
+
+.content {
+  background-color: #f9f9f9;
+  color: #333;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.timer {
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.questions {
+  margin-top: 1.5rem;
+}
+
+.question {
+  margin-bottom: 1rem;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  margin: 0.25rem 0;
+}
+
+.summary {
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
