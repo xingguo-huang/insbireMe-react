@@ -8,10 +8,11 @@ function App() {
     <BrowserRouter>
       <div className="app">
         <header>
-          <h1>WatsonX.ai Educational Content Generator</h1>
+          <h1>IBM - insbireMe</h1>
           <nav>
-            <Link to="/">Content Generator</Link>
-            <Link to="/lesson-plan">Lesson Plan Generator</Link>
+            <Link to="/">Content Quiz Generator</Link>
+            {' | '}
+            <Link to="/lesson-plan">Learning Plan Generator</Link>
           </nav>
         </header>
         
