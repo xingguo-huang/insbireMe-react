@@ -10,7 +10,7 @@ function App() {
       <div className="app">
         <aside className="sidebar">
           <img src={ibmLogo} alt="IBM Logo" className="sidebar-logo" />
-          <h2>inspireMe</h2>
+          <h2>insbireMe</h2>
           <nav>
             <NavLink to="/" end>Content Quiz Generator</NavLink>
             <NavLink to="/lesson-plan">Learning Plan Generator</NavLink>
