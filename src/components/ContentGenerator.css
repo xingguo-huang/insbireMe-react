@@ -203,3 +203,114 @@
   background-color: var(--primary-hover, #0055d4);
 }
 
+/* Single row controls */
+.single-row-controls {
+  display: flex;
+  align-items: center; /* Center align all items vertically */
+  gap: 1rem; /* Smaller gap */
+  width: 100%;
+}
+
+/* Topic label */
+.topic-label {
+  font-weight: 500;
+  margin-right: 0.5rem;
+  flex-shrink: 0; /* Prevent label from shrinking */
+}
+
+/* Topic input */
+.topic-input {
+  flex: 1; /* Take up available space */
+  padding: 0.6rem; /* Slightly smaller padding */
+  border: 1px solid var(--border-color, #e0e0e0);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* Toggle wrapper */
+.toggle-wrapper {
+  display: flex;
+  align-items: center;
+  margin: 0 0.5rem;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+}
+
+.slider.round {
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--primary-color, #0066ff);
+}
+
+input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+/* Toggle label */
+.toggle-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-color, #333);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .single-row-controls {
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+  }
+  
+  .topic-label {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .topic-input {
+    flex-basis: 100%;
+    margin-bottom: 0.75rem;
+  }
+}
+

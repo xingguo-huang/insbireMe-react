@@ -13,20 +13,22 @@ export default function ContentGenerator() {
   const [answers, setAnswers] = useState({});
   const [score, setScore] = useState(null);
   const [timerActive, setTimerActive] = useState(false);
+  const [useWebContext, setUseWebContext] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
     setShowQuiz(false);
-    setAnswers({}); // Reset previous answers
-    setScore(null); // Reset previous score
+    setAnswers({});
+    setScore(null);
 
     try {
-      const data = await generateContent(topic);
+      // Pass useWebContext to your API function
+      const data = await generateContent(topic, useWebContext);
       setResult(data);
-      setTimeLeft(120); // Set to 2 minutes (120 seconds)
-      setTimerActive(true); // Activate the timer
+      setTimeLeft(120);
+      setTimerActive(true);
     } catch (err) {
       setError('Failed to generate content. Please try again.');
     } finally {
@@ -82,21 +84,38 @@ export default function ContentGenerator() {
       {!showQuiz && (
         <>
           <div className="input-container">
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label htmlFor="topic">Topic</label>
-                <input
-                  type="text"
-                  id="topic"
-                  value={topic}
-                  onChange={(e) => setTopic(e.target.value)}
-                  placeholder="Enter a topic (e.g., IBM, Quantum Computing)"
-                />
-                <button type="submit" disabled={loading}>
-                  {loading ? 'Generating...' : 'Generate Content'}
-                </button>
+            <div className="single-row-controls">
+              <label htmlFor="topic" className="topic-label">Topic</label>
+              <input
+                type="text"
+                id="topic"
+                value={topic}
+                onChange={(e) => setTopic(e.target.value)}
+                placeholder="Enter a topic (e.g., IBM DB2)"
+                className="topic-input"
+              />
+              
+              <div className="toggle-wrapper">
+                <div className="switch">
+                  <input
+                    type="checkbox"
+                    id="useGoogle"
+                    checked={useWebContext}
+                    onChange={(e) => setUseWebContext(e.target.checked)}
+                  />
+                  <label htmlFor="useGoogle" className="slider round"></label>
+                </div>
+                <span className="toggle-label">Use Google</span>
               </div>
-            </form>
+              
+              <button 
+                onClick={handleSubmit}
+                className="generate-btn"
+                disabled={loading}
+              >
+                {loading ? 'Generating..' : 'Generate'}
+              </button>
+            </div>
           </div>
           
           {error && <div className="error">{error}</div>}
