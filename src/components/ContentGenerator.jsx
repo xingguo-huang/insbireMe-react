@@ -74,79 +74,85 @@ export default function ContentGenerator() {
     setScore(`${correct} / ${total}`);
   };
 
+  // Update the return statement in your component
   return (
     <div className="content-generator">
       <h2>Generate Educational Content</h2>
-
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="topic">Topic:</label>
-          <input
-            type="text"
-            id="topic"
-            value={topic}
-            onChange={(e) => setTopic(e.target.value)}
-            placeholder="Enter a topic (e.g., Photosynthesis)"
-            required
-          />
-        </div>
-
-        <button type="submit" disabled={loading}>
-          {loading ? 'Generating...' : 'Generate Content'}
-        </button>
-      </form>
-
-      {error && <div className="error">{error}</div>}
-
-      {result && !showQuiz && (
-        <div className="result">
-          <h3>Generated Content:</h3>
-          <div className="content">{result.content}</div>
-          <div className="timer-container">
-            <div className="timer">
-              {timeLeft > 0 ? (
-                <span>
-                  Time remaining: <strong>{Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, '0')}</strong>
-                </span>
-              ) : (
-                'Time\'s up! Starting quiz...'
-              )}
-            </div>
-            <button 
-              type="button"
-              onClick={handleStartQuiz}
-              className="start-quiz-btn"
-            >
-              Start Quiz
-            </button>
+      
+      {!showQuiz && (
+        <>
+          <div className="input-container">
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="topic">Topic</label>
+                <input
+                  type="text"
+                  id="topic"
+                  value={topic}
+                  onChange={(e) => setTopic(e.target.value)}
+                  placeholder="Enter a topic (e.g., IBM, Quantum Computing)"
+                />
+                <button type="submit" disabled={loading}>
+                  {loading ? 'Generating...' : 'Generate Content'}
+                </button>
+              </div>
+            </form>
           </div>
-        </div>
-      )}
-
-      {result && showQuiz && (
-        <div className="questions">
-          {result.questions.map((question, index) => (
-            <div key={index} className="question">
-              <p>{question.question_text}</p>
-              {question.options.map((option, optIndex) => (
-                <label key={optIndex} className="option">
-                  <input
-                    type="radio"
-                    name={`q-${index}`}
-                    value={optIndex}
-                    onChange={() => handleOptionChange(index, optIndex)}
-                    checked={answers[index] === optIndex}
-                  />
-                  {option.text}
-                </label>
-              ))}
+          
+          {error && <div className="error">{error}</div>}
+          
+          {result && (
+            <div className="content-container">
+              <div className="content-card">
+                <h3>Generated Content</h3>
+                <div className="content">{result.content}</div>
+              </div>
+              
+              <div className="content-card">
+                <h3>Quiz Settings</h3>
+                <div className="timer-display">
+                  {Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, '0')}
+                </div>
+                <button 
+                  className="quiz-btn"
+                  onClick={handleStartQuiz}
+                  disabled={showQuiz}
+                >
+                  Start Quiz
+                </button>
+              </div>
             </div>
-          ))}
-          {score === null ? (
-            <button onClick={handleQuizSubmit}>Submit Quiz</button>
-          ) : (
-            <div className="summary">Your score: {score}</div>
           )}
+        </>
+      )}
+      
+      {result && showQuiz && (
+        <div className="quiz-container">
+          <h3>Quiz on: {topic}</h3>
+          <div className="questions">
+            {result.questions.map((question, index) => (
+              <div key={index} className="question">
+                <p>{question.question_text}</p>
+                {question.options.map((option, optIndex) => (
+                  <label key={optIndex} className="option">
+                    <input
+                      type="radio"
+                      name={`q-${index}`}
+                      value={optIndex}
+                      onChange={() => handleOptionChange(index, optIndex)}
+                      checked={answers[index] === optIndex}
+                    />
+                    {option.text}
+                  </label>
+                ))}
+              </div>
+            ))}
+            {score === null ? (
+              <button onClick={handleQuizSubmit} className="submit-quiz-btn">Submit Quiz</button>
+            ) : (
+              <div className="summary">Your score: {score}</div>
+            )}
+          </div>
         </div>
       )}
     </div>

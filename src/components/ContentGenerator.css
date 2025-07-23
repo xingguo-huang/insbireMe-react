@@ -5,6 +5,12 @@
   padding: 1rem;
 }
 
+.content-generator h2 {
+  font-size: 2.5rem;
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
 .result {
   margin-top: 1.5rem;
 }
@@ -14,6 +20,8 @@
   color: #333;
   padding: 1rem;
   border-radius: 8px;
+  font-size: 1rem;
+  line-height: 1.6;
 }
 
 .timer {
@@ -76,5 +84,92 @@
 .summary {
   margin-top: 1rem;
   font-weight: bold;
+}
+
+.input-container {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.form-group label {
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.form-group input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background-color: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.content-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.content-card {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 1.5rem;
+  height: 100%;
+}
+
+.content-card h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.timer-display {
+  font-size: 5rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 2rem 0;
+  background-color: var(--timer-bg);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.timer-display span {
+  font-size: 5rem;
+}
+
+.quiz-btn {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+}
+
+.quiz-container {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 2rem;
+  margin-top: 1rem;
+}
+
+.submit-quiz-btn {
+  margin-top: 1.5rem;
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
 }
 

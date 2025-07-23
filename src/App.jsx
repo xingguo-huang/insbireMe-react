@@ -1,31 +1,32 @@
 // src/App.jsx
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, NavLink } from 'react-router-dom';
 import ContentGenerator from './components/ContentGenerator';
 import LessonPlanGenerator from './components/LessonPlanGenerator';
+import ibmLogo from './assets/ibm-logo.svg'; // Add IBM logo to your assets
 
 function App() {
   return (
     <BrowserRouter>
       <div className="app">
-        <header>
-          <h1>IBM - insbireMe</h1>
+        <aside className="sidebar">
+          <img src={ibmLogo} alt="IBM Logo" className="sidebar-logo" />
+          <h2>inspireMe</h2>
           <nav>
-            <Link to="/">Content Quiz Generator</Link>
-            {' | '}
-            <Link to="/lesson-plan">Learning Plan Generator</Link>
+            <NavLink to="/" end>Content Quiz Generator</NavLink>
+            <NavLink to="/lesson-plan">Learning Plan Generator</NavLink>
           </nav>
-        </header>
+        </aside>
         
-        <main>
+        <main className="main-content">
           <Routes>
             <Route path="/" element={<ContentGenerator />} />
             <Route path="/lesson-plan" element={<LessonPlanGenerator />} />
           </Routes>
+          
+          <div className="footer">
+            Powered by IBM watsonx.ai
+          </div>
         </main>
-        
-        <footer>
-          <p>Powered by IBM WatsonX.ai</p>
-        </footer>
       </div>
     </BrowserRouter>
   );
