@@ -165,7 +165,24 @@ button:focus-visible {
 
 /* Footer */
 .footer {
-  margin-top: 2rem;
-  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  max-width: 1200px; /* Match the max-width of content */
+  width: 100%;
+  margin: 2rem auto 0;
+  padding: 1rem 0;
+  color: var(--text-color);
+  opacity: 0.7;
   font-size: 0.9rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .footer {
+    color: rgba(255, 255, 255, 0.6);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .footer {
+    color: rgba(0, 0, 0, 0.6);
+  }
 }

@@ -23,8 +23,11 @@ function App() {
             <Route path="/lesson-plan" element={<LessonPlanGenerator />} />
           </Routes>
           
-          <div className="footer">
-            Powered by IBM watsonx.ai
+          {/* Add a container around the footer for proper alignment */}
+          <div className="content-wrapper">
+            <div className="footer">
+              Powered by IBM watsonx.ai
+            </div>
           </div>
         </main>
       </div>
