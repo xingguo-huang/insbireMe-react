@@ -12,17 +12,21 @@ export default function ContentGenerator() {
   const [timeLeft, setTimeLeft] = useState(0);
   const [answers, setAnswers] = useState({});
   const [score, setScore] = useState(null);
-  
+  const [timerActive, setTimerActive] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    
+    setShowQuiz(false);
+    setAnswers({}); // Reset previous answers
+    setScore(null); // Reset previous score
+
     try {
       const data = await generateContent(topic);
       setResult(data);
-      setShowQuiz(false);
-      setScore(null);
+      setTimeLeft(120); // Set to 2 minutes (120 seconds)
+      setTimerActive(true); // Activate the timer
     } catch (err) {
       setError('Failed to generate content. Please try again.');
     } finally {
@@ -32,12 +36,13 @@ export default function ContentGenerator() {
 
   useEffect(() => {
     let interval;
-    if (result && !showQuiz) {
-      setTimeLeft(120);
+    if (result && timerActive && timeLeft > 0) {
       interval = setInterval(() => {
         setTimeLeft((t) => {
           if (t <= 1) {
             clearInterval(interval);
+            setShowQuiz(true);
+            setTimerActive(false);
             return 0;
           }
           return t - 1;
@@ -45,10 +50,12 @@ export default function ContentGenerator() {
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [result, showQuiz]);
+  }, [result, timerActive, timeLeft]);
 
   const handleStartQuiz = () => {
+    console.log('Start quiz button clicked'); // Add logging
     setShowQuiz(true);
+    setTimerActive(false);
   };
 
   const handleOptionChange = (qIndex, optIndex) => {
@@ -66,7 +73,7 @@ export default function ContentGenerator() {
     });
     setScore(`${correct} / ${total}`);
   };
-  
+
   return (
     <div className="content-generator">
       <h2>Generate Educational Content</h2>
@@ -95,14 +102,24 @@ export default function ContentGenerator() {
         <div className="result">
           <h3>Generated Content:</h3>
           <div className="content">{result.content}</div>
-          <div className="timer">
-            {timeLeft > 0
-              ? `Time remaining: ${Math.floor(timeLeft / 60)}:${String(timeLeft % 60).padStart(2, '0')}`
-              : 'You can start the quiz.'}
+          <div className="timer-container">
+            <div className="timer">
+              {timeLeft > 0 ? (
+                <span>
+                  Time remaining: <strong>{Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, '0')}</strong>
+                </span>
+              ) : (
+                'Time\'s up! Starting quiz...'
+              )}
+            </div>
+            <button 
+              type="button"
+              onClick={handleStartQuiz}
+              className="start-quiz-btn"
+            >
+              Start Quiz
+            </button>
           </div>
-          <button onClick={handleStartQuiz} disabled={timeLeft > 0}>
-            Start Quiz
-          </button>
         </div>
       )}
 
