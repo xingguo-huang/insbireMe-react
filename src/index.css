@@ -38,6 +38,29 @@
   }
 }
 
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  /* Fix button styles in light mode */
+  button {
+    background-color: var(--primary-color);
+    color: white;
+  }
+  button:hover {
+    background-color: var(--primary-hover);
+  }
+  
+  /* Fix footer color in light mode */
+  .footer {
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -145,17 +168,4 @@ button:focus-visible {
   margin-top: 2rem;
   color: rgba(255, 255, 255, 0.6);
   font-size: 0.9rem;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }

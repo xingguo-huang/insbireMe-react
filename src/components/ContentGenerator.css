@@ -87,10 +87,12 @@
 }
 
 .input-container {
-  background-color: var(--card-bg);
+  background-color: var(--card-bg, #ffffff);
+  border: 1px solid var(--border-color, #e0e0e0);
   border-radius: 8px;
   padding: 1.5rem;
   margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
@@ -127,10 +129,12 @@
 }
 
 .content-card {
-  background-color: var(--card-bg);
+  background-color: var(--card-bg, #ffffff);
+  border: 1px solid var(--border-color, #e0e0e0);
   border-radius: 8px;
   padding: 1.5rem;
   height: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .content-card h3 {
@@ -145,9 +149,11 @@
   font-weight: 700;
   text-align: center;
   margin: 2rem 0;
-  background-color: var(--timer-bg);
+  background-color: var(--timer-bg, rgba(0, 0, 0, 0.05));
+  color: var(--text-color, #333);
   padding: 1rem;
   border-radius: 8px;
+  border: 1px solid var(--border-color, #e0e0e0);
 }
 
 .timer-display span {
@@ -158,6 +164,18 @@
   width: 100%;
   padding: 1rem;
   font-size: 1.1rem;
+  background-color: var(--primary-color, #0066ff);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.quiz-btn:hover {
+  background-color: var(--primary-hover, #0055d4);
 }
 
 .quiz-container {
@@ -171,5 +189,17 @@
   margin-top: 1.5rem;
   padding: 0.75rem 2rem;
   font-size: 1.1rem;
+  background-color: var(--primary-color, #0066ff);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.submit-quiz-btn:hover {
+  background-color: var(--primary-hover, #0055d4);
 }
 
