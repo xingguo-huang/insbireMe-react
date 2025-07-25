@@ -1,8 +1,8 @@
 // src/services/api.js
 import axios from 'axios';
 
-// const API_URL = 'https://watsonx-quiz-api.1xqt93j1duhw.us-south.codeengine.appdomain.cloud';
-const API_URL = 'http://127.0.0.1:8000';
+const API_URL = 'https://watsonx-quiz-api.1xqt93j1duhw.us-south.codeengine.appdomain.cloud';
+// const API_URL = 'http://127.0.0.1:8000';
 
 export const generateContent = async (topic, useWebContext = false) => {
   try {
